@@ -32,7 +32,7 @@ void	ft_printing_percent(t_printf *spec)
 		if (spec->precision < -1)
 		{
 			spec->precision = -spec->precision;
-			ft_printing_delimeter(spec->precision, spec);
+			ft_printing_delimeter(spec->width, spec);
 		}
 		else
 			ft_printing_delimeter(spec->width, spec);
@@ -42,15 +42,17 @@ void	ft_printing_percent(t_printf *spec)
 void	ft_printing_string(t_printf *spec, char *str)
 {
 	if (!str)
-		return (ft_printing_string(spec, "(null)"));
+		str = "(null)";
 	if (spec->precision < 0)
 		spec->precision = -1;
-	if ((spec->precision < 0 || spec->precision >= ft_strlen(str)) && !spec->minus)
+	if ((spec->precision < 0 || spec->precision >= ft_strlen(str)) \
+													&& !spec->minus)
 		ft_printing_delimeter(spec->width - ft_strlen(str) + 1, spec);
 	else if (spec->precision != -1 && !spec->minus)
 		ft_printing_delimeter(spec->width - spec->precision + 1, spec);
 	ft_putstr_spec(str, spec);
-	if ((spec->precision == -1 || spec->precision >= ft_strlen(str)) && spec->minus)
+	if ((spec->precision == -1 || spec->precision >= ft_strlen(str)) \
+														&& spec->minus)
 		ft_printing_delimeter(spec->width - ft_strlen(str) + 1, spec);
 	else if (spec->precision != -1 && spec->minus)
 		ft_printing_delimeter(spec->width - spec->precision + 1, spec);

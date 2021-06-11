@@ -1,19 +1,17 @@
 #include "ft_printf.h"
 
-t_printf	ft_spec_init(void)
+t_printf	ft_spec_init(t_printf *spec)
 {
-	t_printf	spec;
-
-	spec.type = '~';
-	spec.minus = 0;
-	spec.plus = 0;
-	spec.space = 0;
-	spec.zero = 0;
-	spec.width = 0;
-	spec.precision = -1;
-	spec.iterator = 0;
-	spec.base = 10;
-	return (spec);
+	spec->type = '~';
+	spec->minus = 0;
+	spec->plus = 0;
+	spec->space = 0;
+	spec->zero = 0;
+	spec->width = 0;
+	spec->precision = -1;
+	spec->iterator = 0;
+	spec->base = 10;
+	return (*spec);
 }
 
 void	ft_flag_parsing(const char *format, t_printf *spec)
@@ -56,7 +54,7 @@ void	ft_width_parsing (const char *format, t_printf *spec, va_list ap)
 		spec->iterator++;
 }
 
-void 	ft_precision_parsing(const char *format, t_printf *spec, va_list ap)
+void 	ft_prec_parsing(const char *format, t_printf *spec, va_list ap)
 {
 	if (*(format + spec->iterator) == '.')
 		spec->iterator++;
@@ -77,6 +75,9 @@ void 	ft_precision_parsing(const char *format, t_printf *spec, va_list ap)
 
 void	ft_type_parsing(const char *format, t_printf *spec)
 {
-	spec->type = *(format + spec->iterator);
-	spec->iterator++;
+	if (*(format + spec->iterator))
+	{
+		spec->type = *(format + spec->iterator);
+		spec->iterator++;
+	}
 }
